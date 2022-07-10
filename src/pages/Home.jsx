@@ -8,9 +8,11 @@ import { Post } from '../components/Post'
 import { TagsBlock } from '../components/TagsBlock'
 import { CommentsBlock } from '../components/CommentsBlock'
 import { fetchPosts, fetchTags } from '../Redux/slices/posts'
+import { fetchAuthMe } from './../Redux/slices/auth'
 
 export const Home = () => {
 	const dispatch = useDispatch()
+	const userData = useSelector((state) => state.auth.data)
 	const { posts, tags } = useSelector((state) => state.posts)
 
 	const isPostsLoading = posts.status === 'loading'
@@ -19,6 +21,7 @@ export const Home = () => {
 	React.useEffect(() => {
 		dispatch(fetchPosts())
 		dispatch(fetchTags())
+		dispatch(fetchAuthMe())
 	}, [])
 
 	return (
@@ -45,7 +48,7 @@ export const Home = () => {
 								viewsCount={obj.viewsCount}
 								commentsCount={3}
 								tags={obj.tags}
-								isEditable
+								isEditabl={userData?._id === obj.user._id}
 							/>
 						),
 					)}

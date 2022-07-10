@@ -4,13 +4,19 @@ import { Link } from 'react-router-dom'
 import Paper from '@mui/material/Paper'
 import Button from '@mui/material/Button'
 import SimpleMDE from 'react-simplemde-editor'
+import { Navigate } from 'react-router-dom'
 
 import 'easymde/dist/easymde.min.css'
 import styles from './AddPost.module.scss'
+import { useSelector } from 'react-redux'
+import { selectIsAuth } from '../../Redux/slices/auth'
 
 export const AddPost = () => {
 	const imageUrl = ''
+	const isAuth = useSelector(selectIsAuth)
+
 	const [value, setValue] = React.useState('')
+	const [title, setTitle] = React.useState('')
 
 	const handleChangeFile = () => {}
 
@@ -34,6 +40,9 @@ export const AddPost = () => {
 		}),
 		[],
 	)
+
+	if (!window.localStorage.getItem('token') && !isAuth)
+		return <Navigate to='/' />
 
 	return (
 		<Paper style={{ padding: 30 }}>
