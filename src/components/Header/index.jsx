@@ -4,9 +4,11 @@ import { Link } from 'react-router-dom'
 
 import styles from './Header.module.scss'
 import Container from '@mui/material/Container'
+import { selectIsAuth } from '../../Redux/slices/auth'
+import { useSelector } from 'react-redux'
 
 export const Header = () => {
-	const isAuth = false
+	const isAuth = useSelector(selectIsAuth)
 
 	const onClickLogout = () => {}
 
@@ -20,9 +22,9 @@ export const Header = () => {
 					<div className={styles.buttons}>
 						{isAuth ? (
 							<>
-								<link to='/posts/create'>
+								<Link to='/posts/create'>
 									<Button variant='contained'>Написать статью</Button>
-								</link>
+								</Link>
 								<Button
 									onClick={onClickLogout}
 									variant='contained'
